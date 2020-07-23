@@ -1,5 +1,5 @@
 add_executable(
-    cameraTest.exe   
-    cameraTest.cpp
-    ../../ConciseRenderEngine/Camera/Camera.cpp
+    point_test  
+    point_test.cpp
+    ${PROJECT_SOURCE_DIR}/ConciseRenderEngine/Mathematics/point.cpp
 )
