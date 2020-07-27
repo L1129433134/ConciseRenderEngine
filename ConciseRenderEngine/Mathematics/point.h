@@ -8,7 +8,7 @@
 // #include "vector.h"
 namespace scmales
 {
-    template <class T>
+    template <class T, int dim>
     class Point
     {
     private:
@@ -18,12 +18,12 @@ namespace scmales
     public:
         Point()
         {
-            m_dim = 0;
-            m_data = nullptr;
+            m_dim = dim;
+            m_data = new T[m_dim];
         }
         Point(std::initializer_list<T> list)
         {
-            m_dim = list.size();
+            m_dim = dim;
             m_data = new T[m_dim];
             int i = 0;
             for (auto it = list.begin(); it != list.end(); it++)
@@ -41,10 +41,10 @@ namespace scmales
                 *(m_data + i) = *(point.m_data + i);
             }
         }
-        int dim()
-        {
-            return m_dim;
-        }
+        // int dim()
+        // {
+        //     return m_dim;
+        // }
         T getData(int i)
         {
             ASSERT(i < m_dim, "error: out of boundary");
