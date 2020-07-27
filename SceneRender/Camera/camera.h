@@ -50,6 +50,8 @@ public:
 	void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
 
 	void processMouseScroll(float yoffset);
+
+	glm::vec3 getPos();
 private:
 	glm::vec3 Position; //相机位置
 	glm::vec3 Front; //相机前向量（初始设置好）,在相机坐标系中的位置，所以在世界坐标系中用的是 Position + Front

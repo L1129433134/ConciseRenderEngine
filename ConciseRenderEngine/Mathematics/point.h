@@ -173,7 +173,7 @@ namespace scmales
 
         ~Point()
         {
-            std::cout << "delete Point" << this << std::endl;
+            // std::cout << "delete Point" << this << std::endl;
         };
     };
 } // namespace scmales

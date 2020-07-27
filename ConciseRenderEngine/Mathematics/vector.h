@@ -151,26 +151,35 @@ namespace scmales
             return *this;
         }
 
-        T dot(const Vector &vec1, const Vector &vec2)
+        T dot(const Vector &vec) // |a.dot(b)| = |a| |b| |cosi|
+        {
+            return Vector::dot(*this, vec);
+        }
+        static T dot(const Vector &vec1, const Vector &vec2)
         {
             ASSERT(vec1.m_dim == vec2.m_dim, "error: dot elements must be the same dim.");
             T sum = 0;
             for (int i = 0; i < vec1.m_dim; i++)
             {
-                sum += *(vec1.m_data + i) * *(vec2.m_data);
+                sum += *(vec1.m_data + i) * *(vec2.m_data + i);
             }
             return sum;
         }
-        Vector cross(const Vector &vec1, const Vector &vec2)
+        Vector cross(const Vector<T, 3> &vec) //|a.cross(b)| = |a||b||sini|
+        {
+            return Vector::cross(*this, vec);
+        }
+        static Vector cross(const Vector<T, 3> &vec1, const Vector<T, 3> &vec2)
         {
             ASSERT(vec1.m_dim == 3 && vec2.m_dim == 3, "error: cross elements must be 3-dim.");
             Vector<T, 3> tempVec;
-            
-            tempVec[0] = vec1[1] * vec2[2] - vec1[2] * vec2[1];
-            tempVec[1] = vec1[2] * vec2[0] - vec1[0] * vec2[2];
-            tempVec[2] = vec1[0] * vec2[1] - vec1[1] * vec2[0];
-                    
+
+            *(tempVec.m_data) = *(vec1.m_data + 1) * *(vec2.m_data + 2) - *(vec1.m_data + 2) * *(vec2.m_data + 1);
+            *(tempVec.m_data + 1) = *(vec1.m_data + 2) * *(vec2.m_data) - *(vec1.m_data) * *(vec2.m_data + 2);
+            *(tempVec.m_data + 2) = *(vec1.m_data) * *(vec2.m_data + 1) - *(vec1.m_data + 1) * *(vec2.m_data);
+            return tempVec;
         }
+
         std::string toString()
         {
             std::string retStr;
@@ -186,7 +195,7 @@ namespace scmales
         }
         virtual ~Vector()
         {
-            std::cout << "delete Vector" << std::endl;
+           //std::cout << "delete Vector" << std::endl;
         };
     };
 } // namespace scmales
