@@ -18,11 +18,14 @@ namespace scmales
     public:
         Point()
         {
+            ASSERT(dim > 0, "error: initialize failed, empty vector is not necessary.");
             m_dim = dim;
             m_data = new T[m_dim];
         }
         Point(std::initializer_list<T> list)
         {
+            ASSERT(dim > 0, "error: initialize failed, empty point is not necessary.");
+            ASSERT(list.size() == dim, "error: initialize failed, sizes of list are not satisfied.");
             m_dim = dim;
             m_data = new T[m_dim];
             int i = 0;
@@ -41,10 +44,6 @@ namespace scmales
                 *(m_data + i) = *(point.m_data + i);
             }
         }
-        // int dim()
-        // {
-        //     return m_dim;
-        // }
         T getData(int i)
         {
             ASSERT(i < m_dim, "error: out of boundary");
@@ -167,6 +166,8 @@ namespace scmales
                 out << *(m_data + i);
                 out >> tempStr;
                 retStr += tempStr;
+                if(i != m_dim-1)
+                    retStr += " ";
             }
             return retStr;
         }

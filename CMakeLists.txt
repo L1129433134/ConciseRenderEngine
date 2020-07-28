@@ -14,8 +14,9 @@ include_directories(SceneRender/Shader)
 include_directories(SceneRender/ThirdParty/include)
 
 # 编译入口
-add_subdirectory (Tests/SceneRender/CameraShaderTest) 
-# add_subdirectory (Tests/ConciseRenderEngine/Mathematics/) 
+# add_subdirectory (Tests/SceneRender/CameraShaderTest) 
+# add_subdirectory (Tests/SceneRender/LightingMapTest) 
+add_subdirectory (Tests/ConciseRenderEngine/Mathematics/) 
 
 
 # 链接器附加库目录

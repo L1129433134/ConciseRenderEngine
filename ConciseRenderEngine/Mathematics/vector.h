@@ -18,11 +18,13 @@ namespace scmales
     public:
         Vector()
         {
+            ASSERT(dim > 0, "error: initialize failed, empty vector is not necessary.");
             m_dim = dim;
             m_data = new T[dim];
         }
         Vector(const scmales::Point<T, dim> &begin, const scmales::Point<T, dim> &end)
         {
+            ASSERT(dim > 0, "error: initialize failed, empty vector is not necessary.");
             ASSERT(begin.dim() == end.dim(), "error: sub elements must be the same dim.");
             m_dim = begin.dim();
             m_data = new T[m_dim];
@@ -34,6 +36,9 @@ namespace scmales
         }
         Vector(std::initializer_list<T> list)
         {
+            ASSERT(dim > 0, "error: initialize failed, empty vector is not necessary.");
+            ASSERT(list.size() == dim, "error: initialize failed, sizes of list are not satisfied.");
+
             m_dim = list.size();
             m_data = new T[m_dim];
             int i = 0;
@@ -180,7 +185,7 @@ namespace scmales
             return tempVec;
         }
 
-        std::string toString()
+        virtual std::string toString()
         {
             std::string retStr;
             for (int i = 0; i < m_dim; i++)
@@ -190,12 +195,13 @@ namespace scmales
                 out << *(m_data + i);
                 out >> tempStr;
                 retStr += tempStr;
+                if(i != m_dim-1)
+                    retStr += " ";
             }
             return retStr;
         }
-        virtual ~Vector()
-        {
-           //std::cout << "delete Vector" << std::endl;
+        virtual ~Vector(){
+            //std::cout << "delete Vector" << std::endl;
         };
     };
 } // namespace scmales
