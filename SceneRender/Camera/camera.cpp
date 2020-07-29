@@ -65,4 +65,9 @@ namespace scmales
         return Position;
     };
 
+    glm::vec3 Camera::getFront()
+    {
+        return Front;
+    };
+
 } // namespace scmales
