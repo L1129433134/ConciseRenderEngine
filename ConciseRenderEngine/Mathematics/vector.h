@@ -11,7 +11,7 @@ namespace scmales
     template <class T, int dim>
     class Vector
     {
-    private:
+    protected:
         T *m_data;
         int m_dim;
 
@@ -57,7 +57,14 @@ namespace scmales
                 *(m_data + i) = *(vec.m_data + i);
             }
         }
-
+        void setData(int i, T val)
+        {
+            *(m_data + i) = val;
+        }
+        T getData(const int &i) const
+        {
+            return *(this->m_data + i);
+        }
         bool operator==(const Vector &vec)
         {
             return this->equal(vec);
@@ -195,7 +202,7 @@ namespace scmales
                 out << *(m_data + i);
                 out >> tempStr;
                 retStr += tempStr;
-                if(i != m_dim-1)
+                if (i != m_dim - 1)
                     retStr += " ";
             }
             return retStr;
