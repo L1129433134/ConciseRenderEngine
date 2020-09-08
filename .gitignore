@@ -34,3 +34,7 @@
 # vscode
 .vscode/
 build/
+
+#resources
+Resources/Objects/
+Resources/Textures
