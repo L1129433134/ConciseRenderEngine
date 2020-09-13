@@ -135,14 +135,13 @@ int main()
 	// -----------
 	// 设置一个立方体模型
 	unsigned int VBO, cubeVAO;
-	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &VBO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
+	
+	glGenVertexArrays(1, &cubeVAO);
 	glBindVertexArray(cubeVAO);
-
 	// 模型的位置信息
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
@@ -154,7 +153,7 @@ int main()
 	unsigned int lightCubeVAO;
 	glGenVertexArrays(1, &lightCubeVAO);
 	glBindVertexArray(lightCubeVAO);
-
+ 
 	// we only need to bind to the VBO (to link it with glVertexAttribPointer), no need to fill it; the VBO's data already contains all we need (it's already bound, but we do it again for educational purposes)
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
