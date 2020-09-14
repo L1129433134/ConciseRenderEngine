@@ -16,9 +16,10 @@ include_directories(SceneRender/ThirdParty/include)
 
 # 编译入口
 # add_subdirectory (Tests/SceneRender/assimpTest)
+add_subdirectory (Tests/SceneRender/BlendTest)
 # add_subdirectory (Tests/SceneRender/CameraShaderTest) 
 # add_subdirectory (Tests/SceneRender/LightingMapTest) 
-add_subdirectory (Tests/SceneRender/FrameTest)
+# add_subdirectory (Tests/SceneRender/FrameTest)
 # add_subdirectory (Tests/SceneRender/DeferredRenderTest)
 # add_subdirectory (Tests/SceneRender/MultiLightTest) 
 # add_subdirectory (Tests/ConciseRenderEngine/Mathematics/) 
