@@ -65,7 +65,7 @@ int main()
     scmales::Shader shader("./Resources/Shaders/frame_test/framebuffers.vs", "./Resources/Shaders/frame_test/framebuffers.fs");
     scmales::Shader screenShader("./Resources/Shaders/frame_test/framebuffers_screen.vs", "./Resources/Shaders/frame_test/framebuffers_screen.fs");
     float cubeVertices[] = {
-        // positions       // texture Coords
+        // positions   // texture Coords
         -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
         0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
@@ -169,7 +169,8 @@ int main()
     shader.setInt("texture1", 0);
 
     screenShader.use();
-    screenShader.setInt("screenTexture", 0);
+    screenShader.setInt("screenTexture", 0); //0表示的是默认的纹理目标绑定到当前shader中，之后在渲染的地方会设置默认的纹理坐标是什么，也就是glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+
 
     //framebuffer
     unsigned int framebuffer;
@@ -202,7 +203,7 @@ int main()
 
         processInput(window);
 
-        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);        //绑定到帧缓冲
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);  //绑定到帧缓冲
         glEnable(GL_DEPTH_TEST); //开启深度测试
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -216,7 +217,7 @@ int main()
         shader.setMat4("projection", projection);
         //cubes
         glBindVertexArray(cubeVAO);
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE0);   //激活纹理单元，绑定GL_TEXTURE_2D对应的纹理；若是在同一个顶点上要用到另一个纹理，则要激活另一个纹理单元，参考lighting_map_test
         glBindTexture(GL_TEXTURE_2D, cubeTexture);
         model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
         shader.setMat4("model", model);
@@ -227,7 +228,7 @@ int main()
         glDrawArrays(GL_TRIANGLES, 0, 36);
         //floor
         glBindVertexArray(planeVAO);
-        glBindTexture(GL_TEXTURE_2D, floorTexture);
+        glBindTexture(GL_TEXTURE_2D, floorTexture); //绑定新的纹理单元
         shader.setMat4("model", glm::mat4(1.0f));
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);

@@ -9,7 +9,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
-
+#include <map>
+#include <vector>
 #include "shader.h"
 #include "camera.h"
 
@@ -17,6 +18,7 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
+unsigned int loadTexture(const char *path);
 // 窗口大小
 // -------
 const unsigned int SCR_WIDTH = 800;
@@ -71,6 +73,8 @@ int main()
 	}
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     scmales::Shader shader("./Resources/Shaders/blend_test/blending.vs", "./Resources/Shaders/blend_test/blending.fs");
     float cubeVertices[] = {
@@ -175,11 +179,12 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    unsigned int cubeTexture = loadTexture("./Resource/textures/container.png");
-    unsigned int floorTexture = loadTexture("./Resource/textures/metal.jpg");
-    unsigned int transparentTexture = loadTexture("./Resource/textures/grass.png");
+    unsigned int cubeTexture = loadTexture("./Resources/Textures/container.png");
+    unsigned int floorTexture = loadTexture("./Resources/Textures/metal.jpg");
+    unsigned int transparentGrassTexture = loadTexture("./Resources/Textures/grass.png");
+    unsigned int transparentWindowTexture = loadTexture("./Resources/Textures/blending_transparent_window.png");
 
-    std::vector<glm::vec3> vegetation 
+    std::vector<glm::vec3> vegetation //这个数组用来画草
     {
         glm::vec3(-1.5f, 0.0f, -0.48f),
         glm::vec3( 1.5f, 0.0f, 0.51f),
@@ -187,6 +192,21 @@ int main()
         glm::vec3(-0.3f, 0.0f, -2.3f),
         glm::vec3 (0.5f, 0.0f, -0.6f)
     };
+
+    std::vector<glm::vec3> windows //这个数组用来画透明窗户
+    {
+        glm::vec3(-1.5f, 0.0f, -0.48f),
+        glm::vec3( 1.5f, 0.0f, 0.51f),
+        glm::vec3( 0.0f, 0.0f, 0.7f),
+        glm::vec3(-0.3f, 0.0f, -2.3f),
+        glm::vec3 (0.5f, 0.0f, -0.6f)
+    };
+    std::map<float, glm::vec3> sorted;
+    for(unsigned int i = 0; i < windows.size(); i++)
+    {
+        float distance = glm::length(camera.getPos() - windows[i]);
+        sorted[distance] = windows[i];  //map会自动根据离视点的距离排序
+    }
 
     shader.use();
     shader.setInt("texture1", 0);
@@ -211,8 +231,54 @@ int main()
 
         // 画立方体
         glBindVertexArray(cubeVAO);
-    }
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, cubeTexture);
+        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+        shader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+        shader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
 
+        //画地面
+        glBindVertexArray(planeVAO);
+        glBindTexture(GL_TEXTURE_2D, floorTexture);
+        model = glm::mat4(1.0f);
+        shader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        //画草，另外画
+        // glBindVertexArray(transparentVAO);
+        // glBindTexture(GL_TEXTURE_2D, transparentGrassTexture);
+        // for(unsigned int i = 0; i < vegetation.size(); i ++)
+        // {
+        //     model = glm::mat4(1.0f);
+        //     model = glm::translate(model, vegetation[i]);
+        //     shader.setMat4("model", model);
+        //     glDrawArrays(GL_TRIANGLES, 0, 6);
+        // }
+
+        // 画窗户，按顺序画
+        glBindVertexArray(transparentVAO);
+        glBindTexture(GL_TEXTURE_2D, transparentWindowTexture);
+        for(std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it!=sorted.rend(); ++it)
+        {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, it->second);
+            shader.setMat4("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+    glDeleteVertexArrays(1, &cubeVAO);
+    glDeleteVertexArrays(1, &planeVAO);
+    glDeleteBuffers(1, &cubeVBO);
+    glDeleteBuffers(1, &planeVBO);
+    glfwTerminate();
+    return 0;
 }
 
 // 响应鼠标输入事件
