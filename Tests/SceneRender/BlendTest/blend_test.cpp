@@ -76,7 +76,7 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    scmales::Shader shader("./Resources/Shaders/blend_test/blending.vs", "./Resources/Shaders/blend_test/blending.fs");
+    scmales::Shader shader("../../../../Tests/SceneRender/BlendTest/blending.vs", "../../../../Tests/SceneRender/BlendTest/blending.fs");
     float cubeVertices[] = {
         // positions          // texture Coords
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -179,10 +179,10 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    unsigned int cubeTexture = loadTexture("./Resources/Textures/container.png");
-    unsigned int floorTexture = loadTexture("./Resources/Textures/metal.jpg");
-    unsigned int transparentGrassTexture = loadTexture("./Resources/Textures/grass.png");
-    unsigned int transparentWindowTexture = loadTexture("./Resources/Textures/blending_transparent_window.png");
+    unsigned int cubeTexture = loadTexture("../../../../Resources/Textures/container.png");
+    unsigned int floorTexture = loadTexture("../../../../Resources/Textures/metal.jpg");
+    unsigned int transparentGrassTexture = loadTexture("../../../../Resources/Textures/grass.png");
+    unsigned int transparentWindowTexture = loadTexture("../../../../Resources/Textures/blending_transparent_window.png");
 
     std::vector<glm::vec3> vegetation //这个数组用来画草
     {

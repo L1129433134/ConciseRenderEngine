@@ -85,8 +85,8 @@ int main()
 
 	// shader编译
 	// ---------
-	scmales::Shader lightingShader("./Resources/Shaders/lighting_map_test/objectColor.vert", "./Resources/Shaders/lighting_map_test/objectColor.frag");
-	scmales::Shader lightCubeShader("./Resources/Shaders/lighting_map_test/lightCube.vert", "./Resources/Shaders/lighting_map_test/lightCube.frag");
+	scmales::Shader lightingShader("../../../../Tests/SceneRender/LightingMapTest/object_color.vert", "../../../../Tests/SceneRender/LightingMapTest/object_color.frag");
+	scmales::Shader lightCubeShader("../../../../Tests/SceneRender/LightingMapTest/light_cube.vert", "../../../../Tests/SceneRender/LightingMapTest/light_cube.frag");
 
 	//模型顶点数组
 	//----------
@@ -167,8 +167,8 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
 
-	unsigned int diffuseMap = loadTexture("./Resources/Textures/container.png");
-	unsigned int specularMap = loadTexture("./Resources/Textures/container_specular.png");
+	unsigned int diffuseMap = loadTexture("../../../../Resources/Textures/container.png");
+	unsigned int specularMap = loadTexture("../../../../Resources/Textures/container_specular.png");
 	lightingShader.use();
 	lightingShader.setInt("material.diffuse", 0);
 	lightingShader.setInt("material.specular", 1);

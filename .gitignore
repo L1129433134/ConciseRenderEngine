@@ -35,6 +35,10 @@
 .vscode/
 build/
 
+# CLion
+.idea/
+cmake-build-debug/
+
 #resources
 Resources/Objects/
-Resources/Textures
+Resources/Textures/

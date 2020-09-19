@@ -49,7 +49,7 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+	
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
@@ -67,7 +67,7 @@ int main()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
-
+	
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// glad加载OpenGL测试
@@ -84,9 +84,9 @@ int main()
 
 	// shader编译
 	// ---------
-	scmales::Shader lightingShader("./Resources/Shaders/camera_shader_test/objectColor.vert", "./Resources/Shaders/camera_shader_test/objectColor.frag");
-	scmales::Shader lightCubeShader("./Resources/Shaders/camera_shader_test/lightCube.vert", "./Resources/Shaders/camera_shader_test/lightCube.frag");
-
+	scmales::Shader lightingShader("../../../../Tests/SceneRender/CameraShaderTest/object_color.vert", "../../../../Tests/SceneRender/CameraShaderTest/object_color.frag");
+	scmales::Shader lightCubeShader("../../../../Tests/SceneRender/CameraShaderTest/light_cube.vert", "../../../../Tests/SceneRender/CameraShaderTest/light_cube.frag");
+	
 	//模型顶点数组
 	//----------
 	float vertices[] = {
@@ -184,7 +184,7 @@ int main()
 		// 设置光源的位置和视点的位置
 		lightingShader.setVec3("light.position", lightPos);
 		lightingShader.setVec3("viewPos", camera.getPos());
-
+		
 		//设置光照属性
 		glm::vec3 lightColor;  //随时间变化光照的颜色
 		lightColor.x = sin(glfwGetTime() * 2.0f);

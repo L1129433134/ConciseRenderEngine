@@ -21,3 +21,13 @@ ar -rc libglad.a glad.o
 切换到build目录下，mingw32-make，注意要安放一下revision.h的位置，源码的问题
 mingw32-make install
 得到需要的libassimp.dll.a和libassimp.dll
+
+#### 使用CLion代替原本的vscode
+注意代码中的所有路径都用相对路径
+mingw64、cmake
+
+#### vscode使用（已放弃）
+C/C++、cmake-tools
+tasks.json （编译器构建设置）
+launch.json （调试器设置）
+c_cpp_properties.json （编译器路径和IntelliSense设置）

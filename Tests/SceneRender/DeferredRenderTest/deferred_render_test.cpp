@@ -37,7 +37,7 @@ int main()
 
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr); // Windowed
     glfwMakeContextCurrent(window);
-
+    
     // Set the required callback functions
     glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
@@ -59,18 +59,18 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     // Setup and compile our shaders
-    scmales::Shader shaderGeometryPass("./Resources/Shaders/deferred_render_test/g_buffer.vs", "./Resources/Shaders/deferred_render_test/g_buffer.fs");
-    scmales::Shader shaderLightingPass("./Resources/Shaders/deferred_render_test/deferred_shading.vs", "./Resources/Shaders/deferred_render_test/deferred_shading.fs");
-    scmales::Shader shaderLightBox("./Resources/Shaders/deferred_render_test/deferred_light_box.vs", "./Resources/Shaders/deferred_render_test/deferred_light_box.fs");
+    scmales::Shader shaderGeometryPass("../../../../Tests/SceneRender/DeferredRenderTest/g_buffer.vs", "../../../../Tests/SceneRender/DeferredRenderTest/g_buffer.fs");
+    scmales::Shader shaderLightingPass("../../../../Tests/SceneRender/DeferredRenderTest/deferred_shading.vs", "../../../../Tests/SceneRender/DeferredRenderTest/deferred_shading.fs");
+    scmales::Shader shaderLightBox("../../../../Tests/SceneRender/DeferredRenderTest/deferred_light_box.vs", "../../../../Tests/SceneRender/DeferredRenderTest/deferred_light_box.fs");
 
     // Set samplers
     shaderLightingPass.use();
     glUniform1i(glGetUniformLocation(shaderLightingPass.ID, "gPosition"), 0);
     glUniform1i(glGetUniformLocation(shaderLightingPass.ID, "gNormal"), 1);
     glUniform1i(glGetUniformLocation(shaderLightingPass.ID, "gAlbedoSpec"), 2);
-
+    
     // Models
-    scmales::Model cyborg("./Resources/Objects/nanosuit/nanosuit.obj");
+    scmales::Model cyborg("../../../../Resources/Objects/nanosuit/nanosuit.obj");
     std::vector<glm::vec3> objectPositions;
     objectPositions.push_back(glm::vec3(-3.0, -3.0, -3.0));
     objectPositions.push_back(glm::vec3(0.0, -3.0, -3.0));

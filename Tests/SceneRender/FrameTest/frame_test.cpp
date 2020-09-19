@@ -62,8 +62,8 @@ int main()
     }
     glEnable(GL_DEPTH_TEST);
 
-    scmales::Shader shader("./Resources/Shaders/frame_test/framebuffers.vs", "./Resources/Shaders/frame_test/framebuffers.fs");
-    scmales::Shader screenShader("./Resources/Shaders/frame_test/framebuffers_screen.vs", "./Resources/Shaders/frame_test/framebuffers_screen.fs");
+    scmales::Shader shader("../../../../Tests/SceneRender/FrameTest/framebuffers.vs", "../../../../Tests/SceneRender/FrameTest/framebuffers.fs");
+    scmales::Shader screenShader("../../../../Tests/SceneRender/FrameTest/framebuffers_screen.vs", "../../../../Tests/SceneRender/FrameTest/framebuffers_screen.fs");
     float cubeVertices[] = {
         // positions   // texture Coords
         -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
@@ -163,8 +163,8 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
     //加载纹理
-    unsigned int cubeTexture = loadTexture("./Resources/Textures/container.png");
-    unsigned int floorTexture = loadTexture("./Resources/Textures/metal.jpg");
+    unsigned int cubeTexture = loadTexture("../../../../Resources/Textures/container.png");
+    unsigned int floorTexture = loadTexture("../../../../Resources/Textures/metal.jpg");
     shader.use();
     shader.setInt("texture1", 0);
 

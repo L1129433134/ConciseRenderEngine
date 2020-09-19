@@ -66,8 +66,8 @@ if (window == NULL)
     stbi_set_flip_vertically_on_load(true);
 
     glEnable(GL_DEPTH_TEST);
-    scmales::Shader ourShader("./Resources/Shaders/assimp_test/model_load.vs", "./Resources/Shaders/assimp_test/model_load.fs");
-    scmales::Model ourModel("./Resources/Objects/nanosuit/nanosuit.obj");
+    scmales::Shader ourShader("../../../../Tests/SceneRender/AssimpTest/model_load.vs", "../../../../Tests/SceneRender/AssimpTest/model_load.fs");
+    scmales::Model ourModel("../../../../Resources/Objects/nanosuit/nanosuit.obj");
     // scmales::Model ourModel("F:\\git_repository\\ConciseRenderEngine\\Resources\\Objects\\nanosuit\\nanosuit.obj");
 
     while (!glfwWindowShouldClose(window))
