@@ -12,6 +12,8 @@ uniform sampler2D shadowMap;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 
+uniform bool shadows;
+
 float ShadowCalculation(vec4 fragPosLightSpace)
 {
     //透视除法
@@ -20,7 +22,28 @@ float ShadowCalculation(vec4 fragPosLightSpace)
     projCoords = projCoords * 0.5 + 0.5;
     float closestDepth = texture(shadowMap, projCoords.xy).r;
     float currentDepth = projCoords.z;
-    float shadow = currentDepth > closestDepth ? 1.0:0.0;
+
+    //计算偏移值
+    vec3 normal = normalize(fs_in.Normal);
+    vec3 lightDir = normalize(lightPos - fs_in.FragPos);
+    float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+
+    //PCF,简单从纹理像素四周对深度贴图采样，然后把结果平均起来
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for(int x = -1; x <= 1; ++x)
+    {
+        for(int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;
+        }
+    }
+    shadow /= 9.0;
+
+    //超出视锥体的深度都设为没有阴影
+    if(currentDepth > 1.0)
+        shadow = 0.0;
     return shadow;
 
 }

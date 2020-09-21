@@ -136,6 +136,11 @@ int main()
     debugDepthQuad.setInt("depthMap", 0);
     glm::vec3 lightPos(-2.0f, 4.0f, -1.0f); //设置光源位置
 
+    //重新设计纹理环绕方式，所有超出深度贴图的坐标的深度范围是1.0,这样超出的坐标将永远不在阴影中
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
     while (!glfwWindowShouldClose(window))
     {
