@@ -20,6 +20,7 @@ add_subdirectory (Tests/SceneRender/MultiLightTest)
 add_subdirectory (Tests/SceneRender/FrameTest)
 add_subdirectory (Tests/SceneRender/DeferredRenderTest)
 add_subdirectory (Tests/SceneRender/ShadowMapTest)
+add_subdirectory (Tests/SceneRender/CubeMapTest)
 add_subdirectory (Tests/ConciseRenderEngine/Mathematics)
 
 

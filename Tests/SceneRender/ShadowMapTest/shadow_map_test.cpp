@@ -105,7 +105,6 @@ int main()
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glBindVertexArray(0);
-    
 
     unsigned int woodTexture = loadTexture("../../../../Resources/Textures/wood.jpg");
 
@@ -126,7 +125,6 @@ int main()
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 
     shader.use();
     shader.setInt("diffuseTexture", 0);
