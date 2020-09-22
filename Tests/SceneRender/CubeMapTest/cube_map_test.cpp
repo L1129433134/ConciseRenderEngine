@@ -208,6 +208,7 @@ if (window == NULL)
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        //说明:理论上应该先画天空盒再画场景，一点问题都没有，但是
         // 画场景（立方体）
         shader.use();
         glm::mat4 model = glm::mat4(1.0f);
